@@ -15,11 +15,12 @@ function getMovieById(id, callback){
 function getMoviePremiers(callback){
 
     var monthAgo = new Date();
-    monthAgo.setMonth(monthAgo.getMonth() - 1);
+    monthAgo.setMonth(monthAgo.getMonth() - 3);
     monthAgo.setHours(0, 0, 0);
     monthAgo.setMilliseconds(0);
 
     mongodb.connect((err, db) => {
+        console.log({ dataLancamento: { $gte: monthAgo } });
         db.collection("movies").find({ dataLancamento: { $gte: monthAgo } }).toArray(callback);
     });
 }
